@@ -14,7 +14,7 @@ A ground state quantum Monte Carlo algorithm based on Path Integral Monte Carlo 
 This repository includes links, code, scripts, and data to generate the plots in the above paper.
 
 ### Requirements
-The raw data in this project was generated via a new Path Integral Monte Carlo simulation for the ground state of bosonic lattice models. The source code for this Monte Carlo simulation can be found in the following [public repository](https://github.com/ecasiano/pimc/tree/master/pimc), alongside the Python scripts used to obtain the data in the [ProcessedData](https://github.com/DelMaestroGroup/papers-code-latticepigs/tree/main/ProcessedData) directory.
+The raw data in this project was generated via a new Path Integral Monte Carlo simulation for the ground state of bosonic lattice models. The source code for this Monte Carlo simulation can be found in the following [public repository](https://github.com/ecasiano/pimc/tree/master/pimc). The data contained in the [ProcessedData](https://github.com/DelMaestroGroup/papers-code-latticepigs/tree/main/ProcessedData) directory of this repository was by processing raw data (not included here) with the various .py scripts found in the [src](https://github.com/DelMaestroGroup/papers-code-latticepigs/tree/main/src) directory. Figures were generated using the .ipynb notebook files contained there.
 
 ### Support
 The creation of these materials was supported in part by the National Science Foundation under Award No. DMR-1553991.
