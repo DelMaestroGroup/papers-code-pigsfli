@@ -3,7 +3,7 @@
 # Takes average <S2> from many random seeds
 # and combines them into one file
 
-# Made for files in which SWAP histograms are of size 1
+# Made for files in which SWAP histograms are of size 1 (?)
 
 import os
 import numpy as np
@@ -11,7 +11,6 @@ import numpy as np
 # Choose range of betas
 beta_list = [1,2,4,6,8,10,12] # For L=16
 beta_list = [1,2,4,8,16,32] # For L=256
-beta_list=[1]
   
 U_list = np.array([0.500000,
                 0.730000,
@@ -29,29 +28,28 @@ U_list = np.array([0.500000,
                 68.492100,
                 100.000000])
 
-
 for beta in beta_list:
 
     # bin size
-    bs = 10000
+    bs = 10001
 
     # dimension of the hypercube (1,2,or3)
     D = 1
 
     # linear size of the hypercube
-    L = 16
+    L = 256
 
     # total number of particles in the system
-    N = 16
+    N = 256
 
     # maximum linear size of the subregion
-    l_max = 8
+    l_max = 128
 
     # Append sweep results to same list so we can copy paste to plotting script
     S2_plot = []
     S2_err_plot = []
     for U in U_list:
-        for lA_sector_wanted in [8]:
+        for lA_sector_wanted in [128]:
 
             # total number of sites in the subregion (square geom.)
             mA_sector_wanted = lA_sector_wanted**D
