@@ -38,5 +38,8 @@ The creation of these materials was supported in part by the National Science Fo
 #### Figure 15: Relative Error of Accessible Second Rényi Entanglement Entropy
 <img src="https://github.com/DelMaestroGroup/papers-code-latticepigs/blob/main/figures/relativeErrorsS2acc_N8.svg" width="400px">
 
+#### Figure 18: $\beta$-scaling of symmetry-resolved entanglement
+<img src="https://github.com/DelMaestroGroup/papers-code-latticepigs/blob/main/figures/relativeErrorsS2acc_N8.svg" width="400px">
+
 This figure is relesed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) and can be freely copied, redistributed and remixed.
 
