@@ -23,20 +23,23 @@ The creation of these materials was supported in part by the National Science Fo
 
 ### Figures
 
-#### Figure 08: Relative Error of Kinetic & Potential Energies
+#### Figure 10: Relative Error of Kinetic & Potential Energies
 <img src="https://github.com/DelMaestroGroup/papers-code-latticepigs/blob/main/figures/relativeErrorsVK_N8.svg" width="400px">
 
-#### Figure 12: Relative Error of Second Rényi Entanglement Entropy
+#### Figure 14: Relative Error of Second Rényi Entanglement Entropy
 <img src="https://github.com/DelMaestroGroup/papers-code-latticepigs/blob/main/figures/relativeErrorsS2_N8.svg" width="400px">
 
-#### Figure 13: Entanglement as a Function of Interaction Strength
+#### Figure 15: Entanglement as a Function of Interaction Strength
 <img src="https://github.com/DelMaestroGroup/papers-code-latticepigs/blob/main/figures/interactionStrengthSweep_N16N256.svg" width="400px">
 
-#### Figure 14: Entanglement Boundary Law in the Square Bose-Hubbard Lattice
+#### Figure 16: Entanglement Boundary Law in the Square Bose-Hubbard Lattice
 <img src="https://github.com/DelMaestroGroup/papers-code-latticepigs/blob/main/figures/boundaryLaw_N1024.svg" width="400px">
 
-#### Figure 15: Relative Error of Accessible Second Rényi Entanglement Entropy
+#### Figure 17: $\beta$-scaling of Accessible Second Rényi Entanglement Entropy
 <img src="https://github.com/DelMaestroGroup/papers-code-latticepigs/blob/main/figures/relativeErrorsS2acc_N8.svg" width="400px">
+
+#### Figure 18: $\beta$-scaling of symmetry-resolved entanglement
+<img src="https://github.com/DelMaestroGroup/papers-code-latticepigs/blob/main/figures/symmetry_resolved_s2_vs_beta.svg" width="400px">
 
 This figure is relesed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) and can be freely copied, redistributed and remixed.
 
