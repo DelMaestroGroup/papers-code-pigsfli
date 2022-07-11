@@ -17,7 +17,7 @@ This repository includes links, code, scripts, and data to generate the plots in
 The raw data in this project was generated via a new Path Integral Monte Carlo simulation for the ground state of bosonic lattice models. The source code for this Monte Carlo simulation can be found in the following [public repository](https://github.com/ecasiano/pimc/tree/master/pimc). The data contained in the [ProcessedData](https://github.com/DelMaestroGroup/papers-code-latticepigs/tree/main/ProcessedData) directory of this repository was by processing raw data (not included here) with the various .py scripts found in the [src](https://github.com/DelMaestroGroup/papers-code-latticepigs/tree/main/src) directory. Figures were generated using the .ipynb notebook files contained there.
 
 ### Support
-The creation of these materials was supported in part by the National Science Foundation under Award No. DMR-1553991.
+The creation of these materials was supported in part by the National Science Foundation under Award Nos. [DMR-1553991](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1553991&HistoricalAwards=false) and [DMR-2041995](https://www.nsf.gov/awardsearch/showAward?AWD_ID=2041995&HistoricalAwards=false).
 
 [<img width="100px" src="https://www.nsf.gov/images/logos/NSF_4-Color_bitmap_Logo.png">](http://www.nsf.gov/awardsearch/showAward?AWD_ID=1553991)
 
@@ -41,5 +41,5 @@ The creation of these materials was supported in part by the National Science Fo
 #### Figure 18: $\beta$-scaling of symmetry-resolved entanglement
 <img src="https://github.com/DelMaestroGroup/papers-code-latticepigs/blob/main/figures/symmetry_resolved_s2_vs_beta.svg" width="400px">
 
-This figure is relesed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) and can be freely copied, redistributed and remixed.
+Figures are relesed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) and can be freely copied, redistributed and remixed.
 
