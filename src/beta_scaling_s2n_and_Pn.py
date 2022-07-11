@@ -19,11 +19,11 @@ import os
 import numpy as np
 
 #  Set value of U
-# U_list=np.array([0.500000])
-# U_list=np.array([3.300000])
+U_list=np.array([0.500000])
+U_list=np.array([3.300000])
 U_list=np.array([10.000000])
 
-beta_list=[0.6,0.7,0.8,0.9,1.0,1.15,1.3,1.5,1.75,2.0,2.5,3.0,3.5,4.0,6.0]
+beta_list=[0.6,0.7,0.8,0.9,1.0,1.15,1.3,1.5,1.75,2.0,2.5,3.0,3.5,4.0,6.0,8.0]
 
 S2_plot = []
 S2_err_plot = []
