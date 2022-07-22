@@ -14,9 +14,7 @@ A ground state quantum Monte Carlo algorithm based on Path Integral Monte Carlo 
 This repository includes links, code, scripts, and data to generate the plots in the above paper.
 
 ### Requirements
-The data in this project was generated via a new path integral Monte Carlo algorithm for the ground state of bosonic lattice models: 
-
-[pigsfli](https://github.com/DelMaestroGroup/pigsfli).
+The data in this project was generated via a new path integral Monte Carlo algorithm for the ground state of bosonic lattice models: [pigsfli](https://github.com/DelMaestroGroup/pigsfli).
 
 The data contained in the [ProcessedData](https://github.com/DelMaestroGroup/papers-code-latticepigs/tree/main/ProcessedData) directory of this repository was obtained by processing raw data [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.6827186.svg)](https://doi.org/10.5281/zenodo.6827186) with the various `.py` scripts found in the [src](https://github.com/DelMaestroGroup/papers-code-latticepigs/tree/main/src) directory. Figures were generated using the `.ipynb` notebook files contained there.
 
