@@ -1,5 +1,5 @@
 [![Paper](https://img.shields.io/badge/paper-arXiv%3AXXXX.YYYYY-B31B1B.svg)](https://arxiv.org/abs/XXXX.YYYYY)
-<!-- [![DOI](https://zenodo.org/badge/214220909.svg)](https://zenodo.org/badge/latestdoi/214220909) -->
+[![DOI](https://zenodo.org/badge/355554146.svg)](https://zenodo.org/badge/latestdoi/355554146)
 
 #  ``PIGSFLI``: A Path-Integral Ground State Monte Carlo Algorithm for Entanglement of Lattice Bosons
 
