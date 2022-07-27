@@ -5,10 +5,10 @@
 
 Emanuel Casiano-Diaz, Chris M. Herdman, Adrian Del Maestro
 
-[arXiv:XXXX.YYYYY](https://arxiv.org/abs/XXXX.YYYYY)
+[arXiv:2207.11301](https://arxiv.org/abs/2207.11301)
 
 ### Abstract
-A ground state quantum Monte Carlo algorithm based on Path Integral Monte Carlo (PIMC) is introduced that allows for the simulation of lattice bosons at zero tempera- ture. The algorithm is validated by computing energy benchmarks in the Bose-Hubbard model that agree with the exact results expected from exact diagonalization. After a successful validation of the algorithm, an estimator is introduced to measure the Rényi entanglement entropy between spatial subregions. The resulting entanglement entropy is measured across the phase diagram of the one-dimensional Bose-Hubbard model for systems consisting of up to L = 256 sites at unit filling, far beyond the reach of exact di- agonalization, and at the insulating-superfluid critical point in two spatial dimensions, confirming the existence of an entanglement area (boundary) law in the ground state. By imposing a particle number superselection rule, the Rényi estimator is extended to measure the symmetry resolved entanglement that is operationally accessible as a re- source.
+ A ground state path integral quantum Monte Carlo algorithm is introduced that allows for the simulation of lattice bosons at zero temperature. The method is successfully benchmarked against the one dimensional Bose-Hubbard model through comparison with the potential and kinetic energy computed via exact diagonalization. After successful validation, an estimator is introduced to measure the Rényi entanglement entropy between spatial subregions which is explored across the phase diagram of the one dimensional Bose-Hubbard model for systems consisting of up to 256 sites at unit-filling, far beyond the reach of exact diagonalization. The favorable scaling of the algorithm is demonstrated through a further measurement of the Rényi entanglement entropy at the two dimensional superfluid-insulator critical point for large system sizes, confirming the existence of the expected entanglement boundary law in the ground state. The Rényi entanglement estimator is extended to measure the symmetry resolved entanglement that is operationally accessible as a resource. 
 
 ### Description
 This repository includes links, code, scripts, and data to generate the plots in the above paper.
