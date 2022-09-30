@@ -14,7 +14,8 @@ import numpy as np
 U_list=np.array([10.000000])
 
 beta_list=[0.6,0.7,0.8,0.9,1.0,1.15,1.3,1.5,1.75,2.0,2.5,3.0,3.5,4.0]
-
+beta_list=[4.0]
+print(beta_list[-1])
 
 # bin size
 bs = 10000
@@ -30,6 +31,10 @@ N = 8
 
 # maximum linear size of the subregion
 l_max = 4
+
+# Optional: store all measurements of S2 for l_max at fixed U & beta
+store_S2 = True
+S2_measurements = []
 
 # Append sweep results to same list so we can copy paste to plotting script
 S2_plot = []
@@ -161,6 +166,13 @@ for U in U_list:
             # Get mean and std dev,err of S2
             S2_mean = np.mean(S2_jacknifed,axis=0)
             S2_stderr = np.std(S2_jacknifed,axis=0)  * np.sqrt(S2_jacknifed.shape[0])
+            
+            # Optional: Save all measurements of S2 to study measurement distribution
+            if store_S2 and beta==beta_list[-1] and lA_sector_wanted==l_max:
+                print("LOL")
+                for jacknifed_measurement in S2_jacknifed:
+                    S2_measurements.append(jacknifed_measurement)
+                    print("Jacknifed measurements for N=%d,l_A=%d,U=%.6f,beta=%.2f saved"%(N,l_max,U,beta))
 
             print("<S2> = %.4f +/- %.4f"%(S2_mean[mA_sector_wanted],S2_stderr[mA_sector_wanted]))
 
@@ -192,3 +204,10 @@ beta_list = np.array(beta_list)
  #Format the data file
 with open("../ProcessedData/"+str(D)+"D_%d_%d_%d_%.6f_%.6f_betas_%d_S2.dat"%(L,N,l_max,U,t,bin_size),"w+") as processed_data:
     np.savetxt(processed_data,np.c_[beta_list,S2_plot,S2_err_plot],delimiter=" ",fmt="%.16f",header="BH Parameters: L=%d,N=%d,D=%d,l=%d,U=%.6f,t=%.6f,bin_size=%d \n beta            <S2>               StdErr."%(L,N,D,l_max,U,t,bin_size))
+    
+# Optional
+if store_S2:
+    S2_measurements = np.array(S2_measurements)
+     #Format the data file
+    with open("../ProcessedData/"+str(D)+"D_%d_%d_%d_%.6f_%.6f_betas_%d_S2_measurements.dat"%(L,N,l_max,U,t,bin_size),"w+") as processed_data:
+        np.savetxt(processed_data,S2_measurements,delimiter=" ",fmt="%.16f",header="BH Parameters: L=%d,N=%d,D=%d,l=%d,U=%.6f,t=%.6f,bin_size=%d,beta=%.2f\n S2_measurement"%(L,N,D,l_max,U,t,bin_size,beta_list[-1]))
