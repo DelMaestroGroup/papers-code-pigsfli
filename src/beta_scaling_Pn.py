@@ -2,9 +2,6 @@
 # and for fixed system size an beta, computes it as
 # function of subsystem size. 
 
-# We then extract the symmetry-resolved Renyi entropies
-# for each of the different local particle numbers
-
 # What we're doing on one file:
 # 1) Loading P(n) for desired swapped sector mA
 # 2) Load SWAP(n) files
@@ -19,15 +16,14 @@ import os
 import numpy as np
 
 #  Set value of U
-# U_list=np.array([0.500000])
 U_list=np.array([3.300000])
-# U_list=np.array([10.000000])
 
-beta_list=[0.6,0.7,0.8,0.9,1.0,1.15,1.3,1.5,1.75,2.0,2.5,3.0,3.5,4.0,6.0,8.0]
+beta_list=[4,6,8,12,16,32]
+beta_list=[4,6,8,12,16,24]
+beta_list=[4,6,8,12,24]
+beta_list=[1,2,4,8]
 beta_list=[4,6,8,12,16,24,32]
 
-S2_plot = []
-S2_err_plot = []
 
 L_int = 64
 N_int = 64
@@ -35,12 +31,17 @@ l_int = L_int//2
 
 l_list = np.arange(1,l_int+1)
 
+S2_plot = []
+S2_err_plot = []
 for U in U_list:
-    # Flag to know if this is the first iteration of innermost loop
-    first_iteration = True
-    for beta in beta_list:
-        for l_sector_wanted in l_list:
-        
+    for l_sector_wanted in l_list:
+        Pn_mean_for_all_betas = -np.ones((len(beta_list),N_int+1))
+        Pn_err_for_all_betas = -np.ones((len(beta_list),N_int+1))
+        beta_ctr = -1
+        for beta in beta_list:
+            
+            beta_ctr += 1 
+            
             incomplete_seeds = [] 
             seeds_list = list(range(1000))
             seeds_measured = []
@@ -49,11 +50,11 @@ for U in U_list:
             L = "%d"%(L_int)
 #             N = "%d"%(2*l_sector_wanted)
             N = "%d"%(N_int)
-            l_max = "%d"%(L_int//2)
+            l_max = "%d"%(l_int)
             beta = "%.6f"%beta
             bin_size = "10000"
             bin_size_filename = bin_size
-            # if beta=="6.000000": bin_size = "10001" # Accidentally ran beta=6 simulation w/ this size
+#             if beta=="6.000000": bin_size = "10001" # Accidentally ran beta=6 simulation w/ this size
             D = "1"
             U = "%.6f"%(U)
             t = "1.000000"
@@ -62,7 +63,6 @@ for U in U_list:
             path = "/Users/ecasiano/Desktop/AccessibleData/"
             path += D+"D_"+L+"_"+N+"_"+l_max+"_"+U+"_"+\
             t+"_"+beta+"_"+bin_size+"/"
-
             # Stores all files in the directory
             filenames_all = os.listdir(path)
 
@@ -165,7 +165,7 @@ for U in U_list:
             PnSquared_col_seed_sum = np.sum(PnSquared_col_sums,axis=0)
             Pn_col_seed_sum = np.sum(Pn_col_sums,axis=0)
 
-            S2n_jacknifed = np.zeros(SWAPn_col_sums.shape)
+            Pn_jacknifed = np.zeros(SWAPn_col_sums.shape)
             S2acc_jacknifed = np.zeros(SWAPn_col_sums.shape[0]) # one element for each seed
             Pn_jacknifed = np.zeros(Pn_col_sums.shape)
             ratio_jacknifed = np.zeros(SWAPn_col_sums.shape)
@@ -178,13 +178,13 @@ for U in U_list:
 
                 # n-resolved Renyi Entropy for data point i
                 ratio_jacknifed[i] = SWAPn_jacknifed_sum / PnSquared_jacknifed_sum
-                S2n_jacknifed[i] = -np.log ( ratio_jacknifed[i] ) 
+                Pn_jacknifed[i] = -np.log ( ratio_jacknifed[i] ) 
 
                 # Grab indices of n-sectors where S2acc will not be NaN or inf.
                 good_nsectors = np.argwhere(np.logical_not(np.isnan(ratio_jacknifed[i])) & np.logical_not(np.isinf(ratio_jacknifed[i])))
 
                 # Accessible Renyi Entropy for data point i
-    #             S2acc_jacknifed[i] = np.sum(Pn_jacknifed_sum * S2n_jacknifed[i]) / np.sum(Pn_jacknifed_sum)
+    #             S2acc_jacknifed[i] = np.sum(Pn_jacknifed_sum * Pn_jacknifed[i]) / np.sum(Pn_jacknifed_sum)
                 S2acc_jacknifed[i] = -2*np.log(np.sum(Pn_jacknifed_sum[good_nsectors] * np.sqrt(ratio_jacknifed[i][good_nsectors])) / np.sum(Pn_jacknifed_sum[good_nsectors]))
 
                 # Local particle number distribution for data point i
@@ -193,8 +193,11 @@ for U in U_list:
             print("Final number of seeds: ",number_of_seeds,"\n")     
 
             # Calculate Renyi Entropies of each local particle number sector
-            S2n_mean = np.mean(S2n_jacknifed,axis=0)
-            S2n_err = np.std(S2n_jacknifed,axis=0) * np.sqrt(S2n_jacknifed.shape[0])
+            Pn_mean = np.mean(Pn_jacknifed,axis=0)
+            Pn_err = np.std(Pn_jacknifed,axis=0) * np.sqrt(Pn_jacknifed.shape[0])
+            
+            Pn_mean_for_all_betas[beta_ctr] = Pn_mean
+            Pn_err_for_all_betas[beta_ctr] = Pn_err
 
             # Calculate the total accessible entanglement entropy. Old way. MIGHT need error propagation and sum up all sectors instead.
             S2acc_mean = np.mean(S2acc_jacknifed,axis=0)
@@ -205,11 +208,11 @@ for U in U_list:
             Pn_err = np.std(Pn_jacknifed,axis=0) * np.sqrt(number_of_seeds)
 
             # Print P(n),S2(n) for each sector to screen
-            for i in range(len(S2n_mean)):
+            for i in range(len(Pn_mean)):
                 print("P(n=%d) = %.4f +/- %.4f"%(i,Pn_mean[i],Pn_err[i]))
             print("\n")
-            for i in range(len(S2n_mean)):
-                print("S2(n=%d) = %.4f +/- %.4f"%(i,S2n_mean[i],S2n_err[i]))
+            for i in range(len(Pn_mean)):
+                print("S2(n=%d) = %.4f +/- %.4f"%(i,Pn_mean[i],Pn_err[i]))
 
             print("\nS2acc = %.4f +/- %.4f \n"%(S2acc_mean,S2acc_err))
             
@@ -224,6 +227,7 @@ for U in U_list:
                 print("Throwaway Error: ",throwaway_err)
                 print("S2acc_err: ",S2acc_err)
                 
+
         # print("Seeds not included for some reason: ")
 
         # for i in seeds_list:
@@ -235,95 +239,47 @@ for U in U_list:
         print("beta=",beta_list)
 
         beta_list = np.array(beta_list)
+         #Format the data file
+        # with open("../ProcessedData/"+str(D)+"D_%d_%d_%d_%.6f_%.6f_betas_%d_S2acc.dat"%(L,N,l_sector_wanted,U,t,int(bin_size_filename)),"w+") as processed_data:
+            # np.savetxt(processed_data,np.c_[beta_list,S2_plot,S2_err_plot],delimiter=" ",fmt="%.16f",header="BH Parameters: L=%d,N=%d,D=%d,l=%d,U=%.6f,t=%.6f,bin_size=%d \n beta            <S2acc>            StdErr."%(L,N,D,l_sector_wanted,U,t,int(bin_size_filename)))
+            # np.savetxt(processed_data,np.c_[beta_list,Pn_mean],delimiter=" ",fmt="%.16f",header="BH Parameters: L=%d,N=%d,D=%d,l=%d,U=%.6f,t=%.6f,bin_size=%d \n beta            <S2acc>            StdErr."%(L,N,D,l_sector_wanted,U,t,int(bin_size_filename)))
             
-        # Open s2n file for writing
-        if first_iteration:
-            filename = "../ProcessedData/"+str(D)+"D_%d_%d_%d_%.6f_%.6f_betas_%d_s2n.dat"%(L,N,l_sector_wanted,U,t,int(bin_size_filename))
-            file_s2n = open(filename, "w+")
-            header = "# BH Parameters: L=%d,N=%d,D=%d,l=%d,U=%.6f,t=%.6f,bin_size=%d \n# "%(L,N,D,l_sector_wanted,U,t,int(bin_size_filename))
-            file_s2n.write(header)
-            for n in range(N+1):
-                file_s2n.write("s2n%d"%n)
-                file_s2n.write(" ")     
-            file_s2n.write("betas \n")
-            
-        # Write s2n for each local partice number sector
-        for n in range(N+1):
-            file_s2n.write(str(S2n_mean[n]))
-            file_s2n.write(" ")
+        # Open file for writing
+        filename = "../ProcessedData/"+str(D)+"D_%d_%d_%d_%.6f_%.6f_betas_%d_Pn.dat"%(L,N,l_sector_wanted,U,t,int(bin_size_filename))
+        file = open(filename, "w+")
+        header = "# BH Parameters: L=%d,N=%d,D=%d,l=%d,U=%.6f,t=%.6f,bin_size=%d \n # beta Pn0 Pn1 ... Pn%dErr\n"%(L,N,D,l_sector_wanted,U,t,int(bin_size_filename),N)
+        file.write(header)
         
-        # Write the corresponding beta value at end of column
-        file_s2n.write(str(beta))
-        file_s2n.write("\n")
-        
-        # Open s2nErr file for writing
-        if first_iteration:
-            filename = "../ProcessedData/"+str(D)+"D_%d_%d_%d_%.6f_%.6f_betas_%d_s2nErr.dat"%(L,N,l_sector_wanted,U,t,int(bin_size_filename))
-            file_s2nErr = open(filename, "w+")
-            header = "# BH Parameters: L=%d,N=%d,D=%d,l=%d,U=%.6f,t=%.6f,bin_size=%d (STD ERRORS)\n# "%(L,N,D,l_sector_wanted,U,t,int(bin_size_filename))
-            file_s2nErr.write(header)
+        # print(Pn_mean_for_all_betas,Pn_mean_for_all_betas.shape,l_sector_wanted,Pn_mean_for_all_betas)
+        # quit()
+        for k,beta in enumerate(beta_list):
+            file.write(str(beta))
+            file.write(" ")
             for n in range(N+1):
-                file_s2nErr.write("s2n%dErr"%n)
-                file_s2nErr.write(" ")     
-            file_s2nErr.write("betas \n")
+                file.write(str(Pn_mean_for_all_betas[k,n]))
+                file.write(" ")
+            file.write("\n")
 
-        # Write s2n error for each local partice number sector
-        for n in range(N+1):
-            file_s2nErr.write(str(S2n_err[n]))
-            file_s2nErr.write(" ")
+        file.close()
         
-        # Write the corresponding beta value at end of column
-        file_s2nErr.write(str(beta))
-        file_s2nErr.write("\n")
+        # Open file for writing
+        filename = "../ProcessedData/"+str(D)+"D_%d_%d_%d_%.6f_%.6f_betas_%d_PnErr.dat"%(L,N,l_sector_wanted,U,t,int(bin_size_filename))
+        file = open(filename, "w+")
+        header = "# BH Parameters: L=%d,N=%d,D=%d,l=%d,U=%.6f,t=%.6f,bin_size=%d \n # beta Pn0Err Pn1Err ... Pn%dErr\n"%(L,N,D,l_sector_wanted,U,t,int(bin_size_filename),N)
+        file.write(header)
         
-        # Open Pn file for writing
-        if first_iteration:
-            filename = "../ProcessedData/"+str(D)+"D_%d_%d_%d_%.6f_%.6f_betas_%d_Pn.dat"%(L,N,l_sector_wanted,U,t,int(bin_size_filename))
-            file_Pn = open(filename, "w+")
-            header = "# BH Parameters: L=%d,N=%d,D=%d,l=%d,U=%.6f,t=%.6f,bin_size=%d \n# "%(L,N,D,l_sector_wanted,U,t,int(bin_size_filename))
-            file_Pn.write(header)
+        for k,beta in enumerate(beta_list):
+            file.write(str(beta))
+            file.write(" ")
             for n in range(N+1):
-                file_Pn.write("Pn%d"%n)
-                file_Pn.write(" ")     
-            file_Pn.write("betas \n")
-            
-        # Write Pn for each local partice number sector
-        for n in range(N+1):
-            file_Pn.write(str(Pn_mean[n]))
-            file_Pn.write(" ")
-        
-        # Write the corresponding beta value at end of column
-        file_Pn.write(str(beta))
-        file_Pn.write("\n")
-        
-        # Open PnErr file for writing
-        if first_iteration:
-            filename = "../ProcessedData/"+str(D)+"D_%d_%d_%d_%.6f_%.6f_betas_%d_PnErr.dat"%(L,N,l_sector_wanted,U,t,int(bin_size_filename))
-            file_PnErr = open(filename, "w+")
-            header = "# BH Parameters: L=%d,N=%d,D=%d,l=%d,U=%.6f,t=%.6f,bin_size=%d (STD ERRORS)\n# "%(L,N,D,l_sector_wanted,U,t,int(bin_size_filename))
-            file_PnErr.write(header)
-            for n in range(N+1):
-                file_PnErr.write("Pn%dErr"%n)
-                file_PnErr.write(" ")     
-            file_PnErr.write("betas \n")
+                file.write(str(Pn_err_for_all_betas[k,n]))
+                file.write(" ")
+            file.write("\n")
 
-        # Write Pn error for each local partice number sector
-        for n in range(N+1):
-            file_PnErr.write(str(Pn_err[n]))
-            file_PnErr.write(" ")
-        
-        # Write the corresponding beta value at end of column
-        file_PnErr.write(str(beta))
-        file_PnErr.write("\n")
+
+        file.close()
             
         # Reset lists that store entanglement data before we iterate
         # to the next subsystem size
-        S2_plot = []
-        S2_err_plot = []
-        
-        # Flag to know if this is the first iteration
-        first_iteration = False
-        
-file_s2n.close()
-file_s2nErr.close()
-
+        # S2_plot = []
+        # S2_err_plot = []
